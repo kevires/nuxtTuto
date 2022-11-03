@@ -2,10 +2,11 @@
     <section>
         <div class="r">
             <div class="ct text_center">
-                <h3>Deck #{{ $route.params.id }}: {{deck.name}}</h3>
+                <h3>Deck: {{deck.name}}</h3>
                 <div class="tools">
                     <button class="btn btn_success">Learn now</button>
                     <button class="btn btn_primary" @click.prevent="openModal">Create a card</button>
+                    <button class="btn btn_warning" @click.prevent="openModal('DeckFormModal')">Edit Deck</button>
                 </div>
 
                 <hr class="devide" />
@@ -45,36 +46,23 @@
 
 
 <script>
+import axios from 'axios'
 import CardListVue from '../../../components/Cards/CardList.vue'
 export default {
     components: {
         CardListVue
     },
-    validate({ params }) {
-        return /^[0-9]$/.test(params.id)
-    },
     asyncData(context) {
-        // // eslint-disable-next-line no-console
-        // console.log(context)
-        return new Promise((resolve, reject)=>{
-            // eslint-disable-next-line nuxt/no-timing-in-fetch-data
-            setTimeout(() => {
-            resolve({
-                deck: {
-                    _id: 1,
-                    name: `Learn English by decks ${context.params.id}`,
-                    description: "Description 1",
-                    thumbnail: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7043a0d1-b74b-4b91-a3af-cad99823d060/dfegna6-6d146a1f-d3e1-425f-a2d6-6c2ee028eaca.jpg/v1/fill/w_613,h_350,q_70,strp/desktop_wallpaper___night_sky_4_by_niphion_dfegna6-350t.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzcwNDNhMGQxLWI3NGItNGI5MS1hM2FmLWNhZDk5ODIzZDA2MFwvZGZlZ25hNi02ZDE0NmExZi1kM2UxLTQyNWYtYTJkNi02YzJlZTAyOGVhY2EuanBnIiwiaGVpZ2h0IjoiPD01MTUiLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLndhdGVybWFyayJdLCJ3bWsiOnsicGF0aCI6Ilwvd21cLzcwNDNhMGQxLWI3NGItNGI5MS1hM2FmLWNhZDk5ODIzZDA2MFwvbmlwaGlvbi00LnBuZyIsIm9wYWNpdHkiOjk1LCJwcm9wb3J0aW9ucyI6MC40NSwiZ3Jhdml0eSI6ImNlbnRlciJ9fQ.Oq625L-zpOQaI4bt_R49v2VgxCDHxM0LmUEUq1WjrPA'
-                }
-            })
-        }, 1500)
-        }).then((data)=>{
-            return data
-        }).catch((e)=>{
-            // eslint-disable-next-line no-console
-            console.log(e)
+        return axios
+        .get(`https://nuxt-learn-english-3798e-default-rtdb.firebaseio.com/decks/${context.params.id}.json`)
+        .then(res =>{
+            return {
+                deck: res.data
+            }
         })
-       
+        .catch((e)=>{
+            context.error(e);
+        })
     },
     data() {
         return {
@@ -99,8 +87,12 @@ export default {
     },
 
     methods: {
-        openModal() {
-            this.$modal.open({ name: 'createCardModal' })
+        openModal(name) {
+            if(name === 'DeckFormModal'){
+                this.$modal.open({ name: 'DeckFormModal', payload: {...this.deck, id: this.$route.params.id} })
+            }else if(name === ''){
+                this.$modal.open({ name: 'createCardModal' })
+            }
         },
         closeModal() {
             this.$modal.close({ name: 'createCardModal' })

@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         closeModal() {
-            this.$modal.close({ name: 'createDeckModal' })
+            this.$modal.close({ name: 'DeckFormModal' })
         },
         onSave() {
             this.$emit('submit', this.editedDeck)

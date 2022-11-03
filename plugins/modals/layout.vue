@@ -43,6 +43,7 @@
         },
         methods:{
             open(params){
+                this.payload = params.payload
                 this.visible=true
             },
             close(params){
