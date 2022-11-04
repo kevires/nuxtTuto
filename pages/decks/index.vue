@@ -24,6 +24,7 @@ export default {
     components: {
         DeckListVue,
     },
+    
     computed: {
         decks() {
             return this.$store.getters.decks

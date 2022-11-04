@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import axios from 'axios'
-// const axios = require('axios')
+
 
 const createStore = () => {
     return new Vuex.Store({
@@ -15,7 +15,7 @@ const createStore = () => {
         actions: {
             nuxtServerInit(vuexContext, context) {
                 return axios
-                    .get('https://nuxt-learn-english-3798e-default-rtdb.firebaseio.com/decks.json')
+                    .get("https://nuxt-learn-english-3798e-default-rtdb.firebaseio.com/decks.json")
                     .then(res => {
                         const decksArr = []
                         for (const key in res.data) {
@@ -25,6 +25,8 @@ const createStore = () => {
                     }).catch((e) => {
                         context.error(e);
                     })
+
+
             },
             setDecks(vuexContext, decks) {
                 vuexContext.commit('setDecks', decks)
