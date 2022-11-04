@@ -35,8 +35,11 @@
                     </div>
                     <div class="form_group d_flex justify_content_end">
                         <button class="btn btn_danger" @click.prevent="closeModal">Close Modal</button>
-                        <button class="btn btn_success ml_3" @click.prevent="createDeck">Create</button>
-
+                        <button 
+                        class="btn btn_success ml_3" 
+                        @click.prevent="createDeck">
+                        Create
+                    </button>
                     </div>
                 </form>
             </div>
@@ -46,18 +49,17 @@
 
 
 <script>
-import axios from 'axios'
 import CardListVue from '../../../components/Cards/CardList.vue'
 export default {
     components: {
         CardListVue
     },
     asyncData(context) {
-        return axios
-        .get(`https://nuxt-learn-english-3798e-default-rtdb.firebaseio.com/decks/${context.params.id}.json`)
-        .then(res =>{
+        return context.app.$axios
+        .$get(`${process.env.baseApiUrl}/decks/${context.params.id}.json`)
+        .then(data =>{
             return {
-                deck: res.data
+                deck: data
             }
         })
         .catch((e)=>{
@@ -85,7 +87,11 @@ export default {
             ]
         }
     },
-
+    head(){
+        return {
+            title: `Deck ${this.deck.name}`
+        }
+    },
     methods: {
         openModal(name) {
             if(name === 'DeckFormModal'){
@@ -97,7 +103,8 @@ export default {
         closeModal() {
             this.$modal.close({ name: 'createCardModal' })
         }
-    }
+    },
+   
 }
 </script>
 

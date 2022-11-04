@@ -15,11 +15,15 @@ export default {
     }],
   },
 
+  loading:{color:'#fff', height: '5px'},
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/css/rhpteam.min.css', '~/assets/css/external.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/modals/v-modal.js'],
+  plugins: [
+    '@/plugins/core-component.js',
+    '@/plugins/modals/v-modal.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -61,4 +65,13 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  env:{
+    baseURL: process.env.BASE_URL || 'https://localhost:3000',
+    baseApiUrl:process.env.BASE_API_URL || 'https://nuxt-learn-english-3798e-default-rtdb.firebaseio.com',
+    fbApikey:'AIzaSyBpsxX6P6FcARdV2AGSQllOELnBdhhEwJw',
+
+  },
+  router:{
+    middleware:'router-log'
+  }
 }

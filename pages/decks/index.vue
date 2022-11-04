@@ -6,13 +6,8 @@
                 <button class="btn btn_success" @click.prevent="openModal">Create a deck</button>
             </div>
             <ul class="decks-list">
-                <DeckListVue 
-                v-for="deck in decks" 
-                :id="deck.id" 
-                :key="deck.id" 
-                :name="deck.name"
-                :description="deck.description" 
-                :thumbnail="deck.thumbnail" />
+                <DeckListVue v-for="deck in decks" :id="deck.id" :key="deck.id" :name="deck.name"
+                    :description="deck.description" :thumbnail="deck.thumbnail" />
             </ul>
         </div>
     </div>
@@ -24,7 +19,10 @@ export default {
     components: {
         DeckListVue,
     },
-    
+    middleware: ['auth', 'check-auth'],
+    head: {
+        title: "Decks list"
+    },
     computed: {
         decks() {
             return this.$store.getters.decks
@@ -34,7 +32,7 @@ export default {
         openModal() {
             this.$modal.open({ name: 'DeckFormModal' })
         },
-        
+
     }
 }
 </script>

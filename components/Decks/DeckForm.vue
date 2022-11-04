@@ -15,7 +15,9 @@
         </div>
         <div class="form_group d_flex justify_content_end">
             <button class="btn btn_danger" @click.prevent="closeModal">Close Modal</button>
-            <button class="btn btn_success ml_3" type="submit" >Create</button>
+            <button class="btn btn_success ml_3" type="submit" >
+                {{editedDeck && editedDeck.id ? 'Edit' : 'Create'  }}
+            </button>
 
         </div>
     </form>

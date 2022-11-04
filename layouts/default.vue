@@ -5,7 +5,7 @@
         <v-modal v-slot="payload" name="DeckFormModal">
             <div class="modal_body">
                 <h2>
-                    {{payload && payload.payload ? 'Edit a Deck' : 'Create a new Deck' }}
+                    {{ payload && payload.payload ? 'Edit a Deck' : 'Create a new Deck' }}
                 </h2>
                 <DeckFormVue :deck="payload.payload" @submit="onSubmit" />
             </div>
@@ -16,7 +16,6 @@
 
 
 <script>
-import axios from 'axios'
 import DeckFormVue from '../components/Decks/DeckForm.vue';
 import DefaultHeaderVue from '../components/Header/DefaultHeader.vue';
 import DefaultFooterVue from '../components/Footer/DefaultFooter.vue';
@@ -29,19 +28,20 @@ export default {
     },
     methods: {
         onSubmit(deckData) {
-            axios.post('https://nuxt-learn-english-3798e-default-rtdb.firebaseio.com/decks.json/', deckData)
-                .then((data) => {
-                    // eslint-disable-next-line no-console
-                    console.log(data)
+            if (deckData && !deckData.id) {
+                this.$store.dispatch("addDeck", deckData).then(()=>
+                    this.$modal.close({name:'DeckFormModal'})
+                )
+            } else {
+                this.$store.dispatch("editDeck", deckData).then(()=>{
+                    this.$modal.close({name:'DeckFormModal'})
+                    this.$router.push("/decks")
                 })
-                .catch((e) => {
-                    // eslint-disable-next-line no-console
-                    console.log(e)
-                })
-            
+            }
+
         }
 
-        
+
     }
 }
 </script>

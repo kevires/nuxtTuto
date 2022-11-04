@@ -8,6 +8,13 @@
 
 </template>
 
+<script>
+export default {
+  middleware: ['auth', 'check-auth']
+}
+</script>
+
+
 <style lang="scss">
 .main {
     margin-left: 3rem;
