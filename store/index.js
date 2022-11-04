@@ -1,6 +1,5 @@
 import Vuex from 'vuex'
 // import axios from 'axios'
-// import HttpsProxyAgent from 'http-proxy'
 
 const createStore = () => {
     return new Vuex.Store({
@@ -15,7 +14,7 @@ const createStore = () => {
         actions: {
             nuxtServerInit(vuexContext, context) {
                 return this.$axios
-                    .get('https://nuxt-learn-english-3798e-default-rtdb.firebaseio.com/decks.json'
+                    .get('https://nuxt-learn-english-3798e-default-rtdb.firebaseio.com/decks'
                     // ,{
                     //     proxy:{
                     //         host: "https://proxybsh.bkav.com",
