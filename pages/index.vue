@@ -32,7 +32,7 @@
 
 <script>
 // export default {
-//   middleware: 'auth'
+//   middleware: ['auth', 'check-auth']
 // }
 </script>
 

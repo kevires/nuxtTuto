@@ -19,7 +19,7 @@ export default {
     components: {
         DeckListVue,
     },
-    middleware: ['auth', 'check-auth'],
+    middleware: ['check-auth', 'auth'],
     head: {
         title: "Decks list"
     },
