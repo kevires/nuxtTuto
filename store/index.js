@@ -129,7 +129,6 @@ const createStore = () => {
                 localStorage.removeItem('token')
                 localStorage.removeItem('tokenExpiration')
             }
-
         },
         getters: {
             decks(state) {
